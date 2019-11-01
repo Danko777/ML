@@ -1,0 +1,26 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import tree
+
+tutorial_data = pd.read_csv('C:/Users/Asus20/Downloads/dogs_n_cats.csv')
+tutorial_data = pd.get_dummies(tutorial_data)
+tut_data = tutorial_data.drop('Вид_собачка',axis = 1).rename(columns = {'Вид_котик': 'Вид'})
+
+clf = tree.DecisionTreeClassifier(criterion = 'entropy', max_depth = 1)
+
+X = tut_data[['Лазает по деревьям']]
+y = tut_data.Вид
+our_tree = clf.fit(X, y)
+
+ddd = pd.read_json('C:/Users/Asus20/Downloads/dataset_209691_15 (2).txt')
+
+X_test = ddd[['Лазает по деревьям']]
+
+Learned_tree_result = our_tree.predict(X_test)
+
+j = 0
+for i in Learned_tree_result:
+    if i == 0:
+        j += 1
+print(j)
